@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
-import { UpdateNewsDto } from './dto/update-news.dto';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Controller('news')
 export class NewsController {
@@ -17,14 +17,14 @@ export class NewsController {
     return this.newsService.findAll();
   }
 
+  @Cron(CronExpression.EVERY_HOUR)
+  saveNewsPeriodic() {
+    return this.newsService.saveNewsPeriodic();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.newsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewsDto: UpdateNewsDto) {
-    return this.newsService.update(+id, updateNewsDto);
   }
 
   @Delete(':id')
