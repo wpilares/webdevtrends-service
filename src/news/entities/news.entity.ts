@@ -6,11 +6,17 @@ export class News {
   id: string;
 
   @Column('text')
-  title: string;
-
-  @Column('text')
   author: string;
 
+  @Column('text')
+  storyTitle: string;
+
+  @Column('integer', { unique: true })
+  storyId: number;
+
+  @Column('text')
+  storyURL: string;
+
   @Column('date')
-  date: string;
+  createdAt: Date;
 }

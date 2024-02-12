@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
-import { UpdateNewsDto } from './dto/update-news.dto';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('news')
 @Controller('news')
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
@@ -10,6 +12,12 @@ export class NewsController {
   @Post()
   create(@Body() createNewsDto: CreateNewsDto) {
     return this.newsService.create(createNewsDto);
+  }
+
+  @Cron(CronExpression.EVERY_HOUR)
+  @ApiOperation({ summary: 'Save news periodically' })
+  saveNewsPeriodic() {
+    return this.newsService.saveNewsPeriodic();
   }
 
   @Get()
@@ -20,11 +28,6 @@ export class NewsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.newsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewsDto: UpdateNewsDto) {
-    return this.newsService.update(+id, updateNewsDto);
   }
 
   @Delete(':id')
