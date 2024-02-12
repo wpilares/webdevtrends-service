@@ -24,5 +24,5 @@ $ yarn run start:dev
 
 ```
 
-Additionally, Swagger documentation is available for this API. You can access it at http://localhost:3000/api when the application is running.
+Additionally, Swagger documentation is available for this API. You can access it at http://localhost:3000/docs when the application is running.
 

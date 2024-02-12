@@ -12,10 +12,10 @@ async function bootstrap() {
       'Web Dev Trends API provides endpoints to fetch and manage technology news articles. Stay up-to-date with the latest trends in web development!',
     )
     .setVersion('1.0')
-    .addTag('trends')
+    .addTag('Endpoints')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({
